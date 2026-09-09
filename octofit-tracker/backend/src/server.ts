@@ -7,11 +7,12 @@ import { User } from './models/user.js';
 import { Workout } from './models/workout.js';
 
 const app = express();
-const port = Number(process.env.PORT) || 8000;
+const port = 8000;
+const host = '0.0.0.0';
 const codespaceName = process.env.CODESPACE_NAME;
 const baseUrl = codespaceName
   ? `https://${codespaceName}-8000.app.github.dev`
-  : `http://localhost:${port}`;
+  : 'http://localhost:8000';
 
 const resources = [
   { path: 'users', findAll: () => User.find().lean() },
@@ -49,7 +50,7 @@ app.use((error: Error, _request: express.Request, response: express.Response, _n
 
 connectDatabase()
   .then(() => {
-    app.listen(port, () => {
+    app.listen(port, host, () => {
       console.log(`OctoFit Tracker API listening at ${baseUrl}`);
     });
   })

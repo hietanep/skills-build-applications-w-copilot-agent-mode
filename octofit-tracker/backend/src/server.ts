@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express from 'express';
 import { connectDatabase } from './config/database.js';
 import { Activity } from './models/activity.js';
@@ -22,6 +23,7 @@ const resources = [
   { path: 'workouts', findAll: () => Workout.find().lean() },
 ] as const;
 
+app.use(cors());
 app.use(express.json());
 
 app.get('/api/health', (_request, response) => {
